@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen, Star, Heart, Camera, Package, ChevronRight, ChevronLeft,
   Sparkles, Shield, Globe, ArrowRight, Quote, Play, Plus, Minus,
-  Truck, RefreshCcw, HelpCircle, MessageCircle
+  Truck, RefreshCcw, HelpCircle, MessageCircle, Menu, X
 } from 'lucide-react';
 
 const fadeUp = {
@@ -74,7 +74,7 @@ function AlbumViewer() {
   return (
     <div>
       {/* Main image */}
-      <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ background: '#111', minHeight: 400 }}>
+      <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{ background: '#111', minHeight: 260 }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -83,7 +83,7 @@ function AlbumViewer() {
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.5 }}
             className="relative w-full"
-            style={{ minHeight: 400 }}
+            style={{ minHeight: 260 }}
           >
             <Image
               src={albumSlides[current].img}
@@ -111,18 +111,18 @@ function AlbumViewer() {
         </AnimatePresence>
 
         {/* Nav arrows */}
-        <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', color: 'white' }}>
-          <ChevronLeft size={22} />
+        <button onClick={prev} className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', color: 'white' }}>
+          <ChevronLeft size={20} />
         </button>
-        <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', color: 'white' }}>
-          <ChevronRight size={22} />
+        <button onClick={next} className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all hover:scale-110" style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', color: 'white' }}>
+          <ChevronRight size={20} />
         </button>
       </div>
 
       {/* Thumbnail strip */}
-      <div className="flex gap-3 mt-4">
+      <div className="flex gap-2 sm:gap-3 mt-3 sm:mt-4">
         {albumSlides.map((slide, i) => (
-          <button key={i} onClick={() => setCurrent(i)} className="relative flex-1 rounded-lg overflow-hidden transition-all" style={{ height: 64, opacity: i === current ? 1 : 0.5, border: i === current ? '2px solid var(--primary)' : '2px solid transparent', cursor: 'pointer' }}>
+          <button key={i} onClick={() => setCurrent(i)} className="relative flex-1 rounded-md sm:rounded-lg overflow-hidden transition-all" style={{ height: 48, opacity: i === current ? 1 : 0.5, border: i === current ? '2px solid var(--primary)' : '2px solid transparent', cursor: 'pointer' }}>
             <Image src={slide.img} alt={slide.label} fill className="object-cover" sizes="120px" />
           </button>
         ))}
@@ -170,16 +170,18 @@ function FAQ() {
 }
 
 export default function HomePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
       {/* NAVBAR */}
       <nav className="glass fixed top-0 left-0 right-0 z-50" style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full brand-gradient flex items-center justify-center">
               <BookOpen size={16} className="text-white" />
             </div>
-            <span className="font-bold text-xl" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--dark)' }}>
+            <span className="font-bold text-lg sm:text-xl" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--dark)' }}>
               Holialby
             </span>
           </div>
@@ -188,37 +190,64 @@ export default function HomePage() {
               <a key={item.label} href={item.href} style={{ color: 'var(--text-muted)', fontSize: 14, fontWeight: 500, textDecoration: 'none' }} className="hover:opacity-80 transition-opacity">{item.label}</a>
             ))}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="hidden sm:flex items-center gap-3">
             <Link href="/login" className="btn-outline" style={{ padding: '10px 24px', fontSize: 14 }}>Log in</Link>
             <Link href="/order/new" className="btn-primary" style={{ padding: '10px 24px', fontSize: 14 }}>
               Create Album <ArrowRight size={14} />
             </Link>
           </div>
+          {/* Mobile hamburger */}
+          <button className="sm:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--dark)' }}>
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="sm:hidden overflow-hidden"
+              style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}
+            >
+              <div className="px-4 py-4 space-y-3">
+                {[{ label: 'How It Works', href: '#how-it-works' }, { label: 'Gallery', href: '#gallery' }, { label: 'Pricing', href: '#pricing' }, { label: 'FAQ', href: '#faq' }].map(item => (
+                  <a key={item.label} href={item.href} onClick={() => setMobileMenuOpen(false)} className="block py-2" style={{ color: 'var(--dark)', fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>{item.label}</a>
+                ))}
+                <div className="flex gap-3 pt-2">
+                  <Link href="/login" className="btn-outline flex-1 justify-center" style={{ padding: '10px 16px', fontSize: 14 }}>Log in</Link>
+                  <Link href="/order/new" className="btn-primary flex-1 justify-center" style={{ padding: '10px 16px', fontSize: 14 }}>Create Album</Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* ==================== HERO ==================== */}
-      <section className="relative overflow-hidden pt-28 pb-20" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center w-full">
+      <section className="relative overflow-hidden pt-24 sm:pt-28 pb-12 sm:pb-20" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
           <motion.div initial="hidden" animate="show" variants={stagger}>
             <motion.div variants={fadeUp} className="section-tag">
               <Sparkles size={12} /> AI-Powered Photo Albums
             </motion.div>
-            <motion.h1 variants={fadeUp} className="text-5xl lg:text-7xl font-bold leading-tight mb-6" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--dark)' }}>
+            <motion.h1 variants={fadeUp} className="text-3xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-4 sm:mb-6" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--dark)' }}>
               Your Event,<br />
               <span className="brand-text">Beautifully</span><br />
               Remembered
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg mb-8 leading-relaxed" style={{ color: 'var(--text-muted)', maxWidth: 460 }}>
+            <motion.p variants={fadeUp} className="text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed" style={{ color: 'var(--text-muted)', maxWidth: 460 }}>
               Upload your photos from any event — wedding, birthday, holiday.
               Our AI designs a stunning physical album with personal captions,
               layouts, and optional religious blessings.
             </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 mb-10">
-              <Link href="/order/new" className="btn-primary" style={{ fontSize: 16, padding: '16px 40px' }}>
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
+              <Link href="/order/new" className="btn-primary justify-center sm:justify-start" style={{ fontSize: 15, padding: '14px 32px' }}>
                 Start Your Album <ArrowRight size={16} />
               </Link>
-              <a href="#how-it-works" className="btn-outline" style={{ fontSize: 16, padding: '16px 40px' }}>
+              <a href="#how-it-works" className="btn-outline justify-center sm:justify-start" style={{ fontSize: 15, padding: '14px 32px' }}>
                 See How It Works
               </a>
             </motion.div>
@@ -261,8 +290,8 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            {/* Floating badges */}
-            <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 3 }} className="absolute -top-4 -right-4 glass rounded-xl p-3 shadow-lg">
+            {/* Floating badges — hidden on small mobile to avoid overflow */}
+            <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 3 }} className="absolute -top-4 -right-4 glass rounded-xl p-3 shadow-lg hidden sm:block">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full brand-gradient flex items-center justify-center">
                   <Heart size={14} className="text-white" />
@@ -273,7 +302,7 @@ export default function HomePage() {
                 </div>
               </div>
             </motion.div>
-            <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 3.5, delay: 0.5 }} className="absolute -bottom-4 -left-4 glass rounded-xl p-3 shadow-lg">
+            <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 3.5, delay: 0.5 }} className="absolute -bottom-4 -left-4 glass rounded-xl p-3 shadow-lg hidden sm:block">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
                   <Shield size={14} className="text-green-600" />
@@ -289,13 +318,13 @@ export default function HomePage() {
       </section>
 
       {/* ==================== EVENT TYPES ==================== */}
-      <section className="py-20" style={{ background: 'white' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-14 sm:py-20" style={{ background: 'white' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-14">
             <motion.div variants={fadeUp} className="section-tag" style={{ justifyContent: 'center', display: 'inline-flex' }}>
               <Globe size={12} /> Any Occasion
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
               Albums for Every Event
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-4 text-lg max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
@@ -317,15 +346,15 @@ export default function HomePage() {
       </section>
 
       {/* ==================== INTERACTIVE ALBUM VIEWER ==================== */}
-      <section id="gallery" className="py-24" style={{ background: 'var(--dark)' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="gallery" className="py-14 sm:py-24" style={{ background: 'var(--dark)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="grid lg:grid-cols-5 gap-12 items-start">
             {/* Left text */}
             <motion.div variants={fadeUp} className="lg:col-span-2 lg:sticky lg:top-32">
               <div className="section-tag" style={{ background: 'rgba(255,0,0,0.15)', color: 'var(--primary-light)', borderColor: 'rgba(255,0,0,0.3)' }}>
                 <BookOpen size={12} /> Explore the Album
               </div>
-              <h2 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
                 From Cover<br />to Last Page
               </h2>
               <p className="mb-8" style={{ color: 'rgba(255,255,255,0.6)', fontSize: 16, lineHeight: 1.7 }}>
@@ -356,13 +385,13 @@ export default function HomePage() {
       </section>
 
       {/* ==================== VIDEO SHOWCASE ==================== */}
-      <section className="py-24" style={{ background: 'white' }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-14">
+      <section className="py-14 sm:py-24" style={{ background: 'white' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-10 sm:mb-14">
             <motion.div variants={fadeUp} className="section-tag" style={{ justifyContent: 'center', display: 'inline-flex' }}>
               <Play size={12} /> See It in Action
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
               Watch the Magic Happen
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-4 text-lg max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
@@ -398,19 +427,19 @@ export default function HomePage() {
       </section>
 
       {/* ==================== HOW IT WORKS ==================== */}
-      <section id="how-it-works" className="py-24" style={{ background: 'var(--cream)' }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-16">
+      <section id="how-it-works" className="py-14 sm:py-24" style={{ background: 'var(--cream)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-10 sm:mb-16">
             <motion.div variants={fadeUp} className="section-tag" style={{ justifyContent: 'center', display: 'inline-flex' }}>
               <BookOpen size={12} /> The Process
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
               How It Works
             </motion.h2>
           </motion.div>
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="space-y-8">
             {steps.map((step, i) => (
-              <motion.div key={step.num} variants={fadeUp} className={`grid md:grid-cols-2 gap-8 items-center ${i % 2 === 1 ? 'md:direction-rtl' : ''}`}>
+              <motion.div key={step.num} variants={fadeUp} className="grid md:grid-cols-2 gap-6 sm:gap-8 items-center">
                 {/* Image */}
                 <div className={`relative rounded-2xl overflow-hidden shadow-lg ${i % 2 === 1 ? 'md:order-2' : ''}`} style={{ aspectRatio: '4/3' }}>
                   <Image src={step.img} alt={step.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
@@ -423,9 +452,9 @@ export default function HomePage() {
                 </div>
                 {/* Text */}
                 <div className={`${i % 2 === 1 ? 'md:order-1' : ''}`}>
-                  <span className="text-6xl font-bold" style={{ color: 'var(--primary)', opacity: 0.12 }}>{step.num}</span>
-                  <h3 className="text-2xl font-bold mb-3 -mt-6" style={{ fontFamily: "'Playfair Display', serif" }}>{step.title}</h3>
-                  <p style={{ color: 'var(--text-muted)', fontSize: 16, lineHeight: 1.7 }}>{step.desc}</p>
+                  <span className="text-5xl sm:text-6xl font-bold" style={{ color: 'var(--primary)', opacity: 0.12 }}>{step.num}</span>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-3 -mt-6" style={{ fontFamily: "'Playfair Display', serif" }}>{step.title}</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: 15, lineHeight: 1.7 }}>{step.desc}</p>
                   {i < steps.length - 1 && (
                     <div className="mt-4 hidden md:block" style={{ width: 2, height: 40, background: 'rgba(255,0,0,0.15)', marginLeft: 4 }} />
                   )}
@@ -460,13 +489,13 @@ export default function HomePage() {
       </section>
 
       {/* ==================== TESTIMONIALS ==================== */}
-      <section className="py-24" style={{ background: 'white' }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-16">
+      <section className="py-14 sm:py-24" style={{ background: 'white' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-10 sm:mb-16">
             <motion.div variants={fadeUp} className="section-tag" style={{ justifyContent: 'center', display: 'inline-flex' }}>
               <Heart size={12} /> Customer Stories
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
               Families Love Their Albums
             </motion.h2>
           </motion.div>
@@ -501,13 +530,13 @@ export default function HomePage() {
       </section>
 
       {/* ==================== PRICING ==================== */}
-      <section id="pricing" className="py-24" style={{ background: 'var(--cream)' }}>
-        <div className="max-w-5xl mx-auto px-6">
+      <section id="pricing" className="py-14 sm:py-24" style={{ background: 'var(--cream)' }}>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="text-center mb-16">
             <motion.div variants={fadeUp} className="section-tag" style={{ justifyContent: 'center', display: 'inline-flex' }}>
               <Package size={12} /> Pricing
             </motion.div>
-            <motion.h2 variants={fadeUp} className="text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif" }}>
               Simple, Transparent Pricing
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-4" style={{ color: 'var(--text-muted)' }}>
@@ -545,15 +574,15 @@ export default function HomePage() {
       </section>
 
       {/* ==================== FAQ ==================== */}
-      <section id="faq" className="py-24" style={{ background: 'white' }}>
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="faq" className="py-14 sm:py-24" style={{ background: 'white' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-5 gap-12">
             {/* Left side */}
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="lg:col-span-2">
               <motion.div variants={fadeUp} className="section-tag">
                 <HelpCircle size={12} /> FAQ
               </motion.div>
-              <motion.h2 variants={fadeUp} className="text-4xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Got Questions?
               </motion.h2>
               <motion.p variants={fadeUp} style={{ color: 'var(--text-muted)', fontSize: 16, lineHeight: 1.7, marginBottom: 24 }}>
@@ -578,19 +607,19 @@ export default function HomePage() {
       </section>
 
       {/* ==================== FOOTER CTA ==================== */}
-      <section className="py-24 relative overflow-hidden" style={{ background: 'var(--dark)' }}>
+      <section className="py-16 sm:py-24 relative overflow-hidden" style={{ background: 'var(--dark)' }}>
         {/* Background image */}
         <div className="absolute inset-0 opacity-15">
           <Image src="/album-sample-imgs/sample10.jpg" alt="" fill className="object-cover" sizes="100vw" />
         </div>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mx-auto px-6 text-center relative">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
             Your memories deserve<br /><span className="brand-text">more than a phone screen</span>
           </h2>
-          <p className="text-lg mb-10" style={{ color: 'rgba(255,255,255,0.6)' }}>
+          <p className="text-base sm:text-lg mb-8 sm:mb-10" style={{ color: 'rgba(255,255,255,0.6)' }}>
             Turn your precious moments into a physical album that lasts a lifetime.
           </p>
-          <Link href="/order/new" className="btn-primary" style={{ fontSize: 17, padding: '18px 52px', background: 'var(--primary)', boxShadow: '0 4px 30px rgba(255,0,0,0.4)' }}>
+          <Link href="/order/new" className="btn-primary" style={{ fontSize: 16, padding: '16px 40px', background: 'var(--primary)', boxShadow: '0 4px 30px rgba(255,0,0,0.4)' }}>
             Create My Album Now <ArrowRight size={17} />
           </Link>
         </motion.div>
