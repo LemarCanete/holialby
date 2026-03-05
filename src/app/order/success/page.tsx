@@ -2,28 +2,28 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { CheckCircle, Package, Mail, BookOpen, ArrowRight, Home } from 'lucide-react';
+import { CheckCircle, Package, Mail, BookOpen, ArrowLeft, Home } from 'lucide-react';
 
 const timeline = [
-    { status: 'Order Placed', desc: 'Album approved and queued for printing', done: true },
-    { status: 'Printing', desc: 'Your album is being printed at 300 DPI', done: false },
-    { status: 'Quality Check', desc: 'Our team inspects every page', done: false },
-    { status: 'Shipped', desc: 'Dispatched via tracked courier', done: false },
-    { status: 'Delivered', desc: 'Arriving at your door', done: false },
+    { status: 'ההזמנה בוצעה', desc: 'האלבום אושר והועבר לתור ההדפסה', done: true },
+    { status: 'בהדפסה', desc: 'האלבום שלך מודפס ב-300 DPI', done: false },
+    { status: 'בדיקת איכות', desc: 'הצוות שלנו בודק כל עמוד', done: false },
+    { status: 'במשלוח', desc: 'נשלח באמצעות שליח עם מעקב', done: false },
+    { status: 'נמסר', desc: 'מגיע עד הדלת שלך', done: false },
 ];
 
 export default function SuccessPage() {
     return (
-        <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+        <div dir="rtl" style={{ background: 'var(--cream)', minHeight: '100vh' }}>
             <nav className="glass px-4 sm:px-6 py-3 sm:py-4" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full brand-gradient flex items-center justify-center">
                         <BookOpen size={15} className="text-white" />
                     </div>
-                    <span className="font-bold text-xl" style={{ fontFamily: 'Playfair Display, serif', color: 'var(--dark)' }}>Holialby</span>
+                    <span className="font-bold text-xl" style={{ fontFamily: 'Heebo, sans-serif', color: 'var(--dark)' }}>Holialby</span>
                 </div>
                 <Link href="/" className="btn-outline" style={{ padding: '10px 24px', fontSize: 14 }}>
-                    <Home size={14} /> Home
+                    <Home size={14} /> דף הבית
                 </Link>
             </nav>
 
@@ -35,22 +35,22 @@ export default function SuccessPage() {
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                    <h1 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
-                        Your Album is Going to Print! 🎉
+                    <h1 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Heebo, sans-serif' }}>
+                        האלבום שלך נשלח להדפסה! 🎉
                     </h1>
                     <p className="text-lg mb-2" style={{ color: 'var(--text-muted)' }}>
-                        Order <span className="font-semibold" style={{ color: 'var(--primary-dark)' }}>#HOL-2026-00847</span> confirmed
+                        הזמנה <span className="font-semibold" style={{ color: 'var(--primary-dark)' }}>#HOL-2026-00847</span> אושרה
                     </p>
                     <p style={{ color: 'var(--text-muted)', fontSize: 15, marginBottom: 40 }}>
-                        We&apos;ve sent a confirmation to your email. Estimated delivery: 10–14 business days.
+                        שלחנו אישור למייל שלך. זמן אספקה משוער: 10–14 ימי עסקים.
                     </p>
 
-                    {/* Info boxes */}
+                    {/* תיבות מידע */}
                     <div className="grid md:grid-cols-3 gap-4 mb-14">
                         {[
-                            { icon: <Package size={22} style={{ color: 'var(--primary)' }} />, title: 'Hardcover Album', desc: 'A4 size · 35 pages · 170gsm paper' },
-                            { icon: <Mail size={22} style={{ color: 'var(--primary)' }} />, title: 'Email Updates', desc: 'Shipping notifications sent to you' },
-                            { icon: <CheckCircle size={22} style={{ color: '#22c55e' }} />, title: '14-Day Guarantee', desc: 'Full reprint if any physical defect' },
+                            { icon: <Package size={22} style={{ color: 'var(--primary)' }} />, title: 'אלבום כריכה קשה', desc: 'גודל A4 · 35 עמודים · נייר 170 גרם' },
+                            { icon: <Mail size={22} style={{ color: 'var(--primary)' }} />, title: 'עדכונים במייל', desc: 'הודעות משלוח ישלחו אליך' },
+                            { icon: <CheckCircle size={22} style={{ color: '#22c55e' }} />, title: 'אחריות 14 יום', desc: 'הדפסה מחדש מלאה בכל פגם פיזי' },
                         ].map(item => (
                             <div key={item.title} className="rounded-xl p-5" style={{ background: 'white', border: '1px solid rgba(255,0,0,0.15)' }}>
                                 <div className="mb-3">{item.icon}</div>
@@ -60,9 +60,9 @@ export default function SuccessPage() {
                         ))}
                     </div>
 
-                    {/* Order Timeline */}
-                    <div className="rounded-2xl p-8 mb-10 text-left" style={{ background: 'white', border: '1px solid rgba(255,0,0,0.15)' }}>
-                        <h3 className="text-xl font-bold mb-6" style={{ fontFamily: 'Playfair Display, serif' }}>Order Timeline</h3>
+                    {/* ציר זמן הזמנה */}
+                    <div className="rounded-2xl p-8 mb-10 text-right" style={{ background: 'white', border: '1px solid rgba(255,0,0,0.15)' }}>
+                        <h3 className="text-xl font-bold mb-6" style={{ fontFamily: 'Heebo, sans-serif' }}>מעקב אחר ההזמנה</h3>
                         <div className="space-y-0">
                             {timeline.map((item, i) => (
                                 <div key={item.status} className="flex gap-4" style={{ paddingBottom: i < timeline.length - 1 ? 24 : 0 }}>
@@ -82,7 +82,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div style={{ paddingTop: 4 }}>
                                         <p className="font-semibold" style={{ color: item.done ? 'var(--dark)' : i === 1 ? 'var(--primary-dark)' : 'var(--text-muted)', fontSize: 15 }}>
-                                            {item.status} {i === 1 && <span style={{ fontSize: 12, background: 'rgba(255,0,0,0.15)', color: 'var(--primary-dark)', padding: '2px 8px', borderRadius: 99, marginLeft: 8 }}>In Progress</span>}
+                                            {item.status} {i === 1 && <span style={{ fontSize: 12, background: 'rgba(255,0,0,0.15)', color: 'var(--primary-dark)', padding: '2px 8px', borderRadius: 99, marginRight: 8 }}>בתהליך</span>}
                                         </p>
                                         <p style={{ color: 'var(--text-muted)', fontSize: 13, marginTop: 2 }}>{item.desc}</p>
                                     </div>
@@ -93,10 +93,10 @@ export default function SuccessPage() {
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link href="/order/new" className="btn-primary" style={{ fontSize: 15, padding: '14px 36px' }}>
-                            Create Another Album <ArrowRight size={15} />
+                            יצירת אלבום נוסף <ArrowLeft size={15} />
                         </Link>
                         <Link href="/" className="btn-outline" style={{ fontSize: 15, padding: '14px 36px' }}>
-                            Back to Home
+                            חזרה לדף הבית
                         </Link>
                     </div>
                 </motion.div>

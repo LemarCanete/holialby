@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, useCallback, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, X, CheckCircle, AlertCircle, BookOpen, ArrowLeft, ArrowRight, ImageIcon } from 'lucide-react';
+import { Upload, X, CheckCircle, AlertCircle, BookOpen, ArrowRight, ArrowLeft, ImageIcon } from 'lucide-react';
 
 const MOCK_PHOTOS = [
     { id: '1', name: 'ceremony_01.jpg', size: '4.2 MB', status: 'done' },
@@ -15,14 +15,14 @@ const MOCK_PHOTOS = [
 ];
 
 const eventLabels: Record<string, string> = {
-    wedding: '💍 Wedding',
-    birthday: '🎂 Birthday',
-    holiday: '✈️ Holiday',
-    'bar-mitzvah': '🕍 Bar Mitzvah',
-    graduation: '🎓 Graduation',
-    anniversary: '❤️ Anniversary',
-    christening: '✝️ Christening',
-    baby: '👶 Baby First Year',
+    wedding: '💍 חתונה',
+    birthday: '🎂 יום הולדת',
+    holiday: '✈️ חופשה',
+    'bar-mitzvah': '🕍 בר מצווה',
+    graduation: '🎓 סיום לימודים',
+    anniversary: '❤️ יום נישואין',
+    christening: '✝️ הטבלה',
+    baby: '👶 שנה ראשונה',
 };
 
 function UploadPageContent() {
@@ -68,14 +68,14 @@ function UploadPageContent() {
             {/* Header */}
             <header className="glass px-3 sm:px-6 py-3 sm:py-4" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
                 <Link href="/order/new" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 }}>
-                    <ArrowLeft size={16} style={{ color: 'var(--text-muted)' }} className="hidden sm:block" />
+                    <ArrowRight size={16} style={{ color: 'var(--text-muted)' }} className="hidden sm:block" />
                     <div className="w-7 h-7 rounded-full brand-gradient flex items-center justify-center">
                         <BookOpen size={13} className="text-white" />
                     </div>
-                    <span className="font-bold hidden sm:inline" style={{ fontFamily: 'Playfair Display, serif', color: 'var(--dark)' }}>Holialby</span>
+                    <span className="font-bold hidden sm:inline" style={{ fontFamily: "'Heebo', sans-serif", color: 'var(--dark)' }}>Holialby</span>
                 </Link>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    {['Event', 'Upload', 'Customize', 'Preview', 'Order'].map((step, i) => (
+                    {['אירוע', 'העלאה', 'התאמה', 'תצוגה', 'הזמנה'].map((step, i) => (
                         <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                             <div style={{
                                 width: 24, height: 24, borderRadius: '50%',
@@ -96,10 +96,10 @@ function UploadPageContent() {
 
             <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
                 <div className="text-center mb-10">
-                    <div className="section-tag" style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: 12 }}>Step 2 of 5 · {eventLabels[event]}</div>
-                    <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: 'Playfair Display, serif' }}>Upload Your Photos</h1>
+                    <div className="section-tag" style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: 12 }}>שלב 2 מתוך 5 · {eventLabels[event]}</div>
+                    <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Heebo', sans-serif" }}>העלו את התמונות</h1>
                     <p style={{ color: 'var(--text-muted)', fontSize: 16 }}>
-                        Drag and drop your photos below. We recommend 20–80 photos for the best album.
+                        גררו ושחררו את התמונות למטה. ממליצים על 20–80 תמונות לאלבום הטוב ביותר.
                     </p>
                 </div>
 
@@ -123,9 +123,9 @@ function UploadPageContent() {
                             <Upload size={28} className="text-white" />
                         </div>
                         <h3 className="text-xl font-semibold mb-2" style={{ color: 'var(--dark)' }}>
-                            {dragging ? 'Drop your photos here!' : 'Drag & drop your photos'}
+                            {dragging ? 'שחררו את התמונות כאן!' : 'גררו ושחררו את התמונות'}
                         </h3>
-                        <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>or click to browse · JPG, PNG, HEIC up to 20MB each</p>
+                        <p style={{ color: 'var(--text-muted)', fontSize: 14 }}>או לחצו לבחירה · JPG, PNG, HEIC עד 20MB</p>
                     </motion.div>
                 </div>
 
@@ -136,7 +136,7 @@ function UploadPageContent() {
                         <div className="flex items-center gap-3">
                             <ImageIcon size={20} style={{ color: 'var(--primary)' }} />
                             <span className="font-semibold" style={{ color: 'var(--dark)' }}>
-                                {doneCount} / {photos.length} photos ready
+                                {doneCount} / {photos.length} תמונות מוכנות
                             </span>
                         </div>
                         <div className="flex-1 mx-6">
@@ -185,7 +185,7 @@ function UploadPageContent() {
                 {/* Simulate adding more */}
                 <div className="flex justify-center gap-4 mb-10">
                     <button onClick={() => simulateUpload(['new_photo_01.jpg', 'new_photo_02.jpg', 'new_photo_03.jpg'])} className="btn-outline" style={{ fontSize: 14, padding: '10px 28px' }}>
-                        + Add More Photos
+                        + הוסיפו עוד תמונות
                     </button>
                 </div>
 
@@ -193,11 +193,11 @@ function UploadPageContent() {
                     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="text-center">
                         <div className="glass rounded-xl p-5 mb-6" style={{ borderColor: 'rgba(34,197,94,0.3)', border: '1px solid', borderRadius: 16 }}>
                             <p className="font-semibold" style={{ color: '#16a34a' }}>
-                                ✓ All {photos.length} photos uploaded successfully — our AI will start analyzing them
+                                ✓ כל {photos.length} התמונות הועלו בהצלחה — ה-AI שלנו יתחיל לנתח
                             </p>
                         </div>
                         <Link href={`/order/customize?event=${event}&photos=${photos.length}`} className="btn-primary" style={{ fontSize: 16, padding: '16px 48px' }}>
-                            Continue to Customize <ArrowRight size={16} />
+                            המשיכו להתאמה אישית <ArrowLeft size={16} />
                         </Link>
                     </motion.div>
                 )}
@@ -208,7 +208,7 @@ function UploadPageContent() {
 
 export default function UploadPage() {
     return (
-        <Suspense fallback={<div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div className="section-tag">Loading...</div></div>}>
+        <Suspense fallback={<div style={{ minHeight: '100vh', background: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div className="section-tag">טוען...</div></div>}>
             <UploadPageContent />
         </Suspense>
     );

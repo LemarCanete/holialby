@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { GoogleTranslate } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Holialby — Your Event, Beautifully Remembered",
-  description: "Upload your event photos and receive a beautifully designed physical album with personalized layouts, captions, and religious content.",
+  title: "Holialby — האירוע שלך, נשמר ביופי מושלם",
+  description: "העלו תמונות מהאירוע וקבלו אלבום מודפס מעוצב ע״י AI עם פריסות מותאמות, כיתובים וברכות דתיות.",
 };
 
 export default function RootLayout({
@@ -12,8 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">{children}</body>
+    <html lang="he" dir="rtl" suppressHydrationWarning>
+      <body className="antialiased" suppressHydrationWarning>
+        <GoogleTranslate />
+        {children}
+      </body>
     </html>
   );
 }

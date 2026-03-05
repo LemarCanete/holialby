@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";
 
@@ -25,11 +25,34 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+[dir="rtl"] body {
+  font-family: 'Heebo', 'Open Sans', sans-serif;
+}
+
 h1,
 h2,
 h3,
 h4 {
   font-family: 'Playfair Display', serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4 {
+  font-family: 'Heebo', sans-serif;
+}
+
+/* RTL overrides */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+  font-family: 'Heebo', 'Open Sans', sans-serif;
+}
+
+[dir="rtl"] .section-tag {
+  direction: rtl;
 }
 
 .brand-gradient {
@@ -48,6 +71,19 @@ h4 {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Google Translate - hide default UI */
+.goog-te-banner-frame {
+  display: none !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
 }
 
 .btn-primary {
