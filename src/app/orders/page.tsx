@@ -1,0 +1,125 @@
+'use client';
+
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { BookOpen, Package, ArrowRight, ChevronRight } from 'lucide-react';
+
+const orders = [
+    { id: 'HOL-2026-00847', event: '💍 Wedding', names: 'Sarah & David', photos: 48, status: 'awaiting_approval', statusLabel: 'Preview Ready', date: 'Mar 5, 2026', price: '$79', steps: [true, true, true, false, false, false, false] },
+    { id: 'HOL-2026-00832', event: '✈️ Holiday', names: 'Italy Trip 2025', photos: 32, status: 'shipped', statusLabel: 'Shipped', date: 'Feb 10, 2026', price: '$49', steps: [true, true, true, true, true, true, false] },
+    { id: 'HOL-2026-00801', event: '🎂 Birthday', names: "Mom's 60th", photos: 22, status: 'delivered', statusLabel: 'Delivered', date: 'Jan 14, 2026', price: '$49', steps: [true, true, true, true, true, true, true] },
+];
+
+const stepLabels = ['Ordered', 'Uploaded', 'Designing', 'Preview', 'Approved', 'Shipping', 'Delivered'];
+
+const statusColors: Record<string, { bg: string; color: string }> = {
+    awaiting_approval: { bg: 'rgba(59,130,246,0.12)', color: '#2563eb' },
+    shipped: { bg: 'rgba(34,197,94,0.12)', color: '#16a34a' },
+    delivered: { bg: 'rgba(34,197,94,0.18)', color: '#15803d' },
+};
+
+export default function OrdersPage() {
+    return (
+        <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+            <nav className="glass" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
+                <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+                    <div className="w-7 h-7 rounded-full brand-gradient flex items-center justify-center">
+                        <BookOpen size={13} className="text-white" />
+                    </div>
+                    <span className="font-bold" style={{ fontFamily: 'Playfair Display, serif', color: 'var(--dark)' }}>Holialby</span>
+                </Link>
+                <div className="flex items-center gap-3">
+                    <Link href="/order/new" className="btn-primary" style={{ fontSize: 13, padding: '10px 22px' }}>
+                        + New Album
+                    </Link>
+                </div>
+            </nav>
+
+            <div className="max-w-4xl mx-auto px-6 py-14">
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>My Orders</h1>
+                        <p style={{ color: 'var(--text-muted)', marginTop: 4, fontSize: 15 }}>Track your albums from creation to delivery</p>
+                    </div>
+                </div>
+
+                <div className="space-y-6">
+                    {orders.map((order, i) => {
+                        const sc = statusColors[order.status] || { bg: 'rgba(0,0,0,0.06)', color: 'var(--text-muted)' };
+                        return (
+                            <motion.div key={order.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
+                                className="rounded-2xl overflow-hidden" style={{ background: 'white', border: '1px solid rgba(255,0,0,0.15)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+                                <div className="p-6">
+                                    <div className="flex items-start justify-between mb-5">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-xl brand-gradient flex items-center justify-center text-2xl shadow-md">
+                                                {order.event.split(' ')[0]}
+                                            </div>
+                                            <div>
+                                                <div className="flex items-center gap-3 mb-1">
+                                                    <p className="font-bold" style={{ color: 'var(--dark)', fontSize: 17 }}>{order.names}</p>
+                                                    <span style={{ background: sc.bg, color: sc.color, padding: '3px 10px', borderRadius: 99, fontSize: 12, fontWeight: 600 }}>{order.statusLabel}</span>
+                                                </div>
+                                                <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
+                                                    {order.id} · {order.photos} photos · {order.price} · {order.date}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <Link href="/order/preview" style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', color: 'var(--primary)', fontSize: 13, fontWeight: 600, background: 'rgba(255,0,0,0.08)', padding: '8px 16px', borderRadius: 99, border: '1px solid rgba(255,0,0,0.25)' }}>
+                                            {order.status === 'awaiting_approval' ? 'Review Album' : 'View Details'}
+                                            <ChevronRight size={13} />
+                                        </Link>
+                                    </div>
+
+                                    {/* Step Timeline */}
+                                    <div className="flex items-center gap-1">
+                                        {stepLabels.map((label, si) => (
+                                            <div key={label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                                                <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+                                                    <div style={{
+                                                        width: 24, height: 24, borderRadius: '50%', flexShrink: 0,
+                                                        background: order.steps[si] ? 'linear-gradient(135deg, var(--primary-dark), var(--primary))' : 'var(--cream)',
+                                                        border: `2px solid ${order.steps[si] ? 'var(--primary)' : 'rgba(255,0,0,0.25)'}`,
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                        fontSize: 10, color: 'white', fontWeight: 700
+                                                    }}>
+                                                        {order.steps[si] ? '✓' : si + 1}
+                                                    </div>
+                                                    {si < stepLabels.length - 1 && (
+                                                        <div style={{ flex: 1, height: 2, background: order.steps[si] && order.steps[si + 1] ? 'linear-gradient(90deg, var(--primary), var(--primary-dark))' : order.steps[si] ? 'linear-gradient(90deg, var(--primary), rgba(255,0,0,0.2))' : 'rgba(255,0,0,0.15)' }} />
+                                                    )}
+                                                </div>
+                                                <p style={{ fontSize: 10, color: order.steps[si] ? 'var(--primary-dark)' : 'var(--text-muted)', fontWeight: order.steps[si] ? 600 : 400, textAlign: 'center', lineHeight: 1.2 }}>{label}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {order.status === 'awaiting_approval' && (
+                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 rounded-lg px-4 py-3 flex items-center justify-between" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.2)' }}>
+                                            <p style={{ color: '#2563eb', fontSize: 13, fontWeight: 500 }}>🎉 Your album preview is ready! Please review and approve to proceed to print.</p>
+                                            <Link href="/order/preview" style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', color: '#2563eb', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap', marginLeft: 12 }}>
+                                                Review Now <ArrowRight size={13} />
+                                            </Link>
+                                        </motion.div>
+                                    )}
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </div>
+
+                {/* Empty footer CTA */}
+                <div className="mt-10 rounded-2xl p-8 text-center" style={{ background: 'white', border: '1px dashed rgba(255,0,0,0.3)' }}>
+                    <div className="w-12 h-12 rounded-full brand-gradient flex items-center justify-center mx-auto mb-4">
+                        <Package size={22} className="text-white" />
+                    </div>
+                    <p className="font-semibold mb-2" style={{ fontFamily: 'Playfair Display, serif', fontSize: 18 }}>Create Another Album</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: 14, marginBottom: 16 }}>Turn more memories into beautiful printed albums</p>
+                    <Link href="/order/new" className="btn-primary" style={{ fontSize: 14, padding: '12px 32px' }}>
+                        Start New Album <ArrowRight size={14} />
+                    </Link>
+                </div>
+            </div>
+        </div>
+    );
+}
