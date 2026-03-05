@@ -15,7 +15,7 @@ const timeline = [
 export default function SuccessPage() {
     return (
         <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
-            <nav className="glass" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <nav className="glass px-4 sm:px-6 py-3 sm:py-4" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-8 rounded-full brand-gradient flex items-center justify-center">
                         <BookOpen size={15} className="text-white" />
@@ -27,7 +27,7 @@ export default function SuccessPage() {
                 </Link>
             </nav>
 
-            <div className="max-w-3xl mx-auto px-6 py-20 text-center">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-20 text-center">
                 <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', duration: 0.6 }}>
                     <div className="w-24 h-24 rounded-full brand-gradient flex items-center justify-center mx-auto mb-8 shadow-2xl">
                         <CheckCircle size={48} className="text-white" />
@@ -35,7 +35,7 @@ export default function SuccessPage() {
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                    <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+                    <h1 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
                         Your Album is Going to Print! 🎉
                     </h1>
                     <p className="text-lg mb-2" style={{ color: 'var(--text-muted)' }}>

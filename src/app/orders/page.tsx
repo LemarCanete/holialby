@@ -21,7 +21,7 @@ const statusColors: Record<string, { bg: string; color: string }> = {
 export default function OrdersPage() {
     return (
         <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
-            <nav className="glass" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
+            <nav className="glass px-4 sm:px-6 py-3 sm:py-4" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
                 <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
                     <div className="w-7 h-7 rounded-full brand-gradient flex items-center justify-center">
                         <BookOpen size={13} className="text-white" />
@@ -35,10 +35,10 @@ export default function OrdersPage() {
                 </div>
             </nav>
 
-            <div className="max-w-4xl mx-auto px-6 py-14">
-                <div className="flex items-center justify-between mb-8">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+                <div className="flex items-center justify-between mb-6 sm:mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>My Orders</h1>
+                        <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'Playfair Display, serif' }}>My Orders</h1>
                         <p style={{ color: 'var(--text-muted)', marginTop: 4, fontSize: 15 }}>Track your albums from creation to delivery</p>
                     </div>
                 </div>
@@ -49,35 +49,35 @@ export default function OrdersPage() {
                         return (
                             <motion.div key={order.id} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
                                 className="rounded-2xl overflow-hidden" style={{ background: 'white', border: '1px solid rgba(255,0,0,0.15)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
-                                <div className="p-6">
-                                    <div className="flex items-start justify-between mb-5">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-xl brand-gradient flex items-center justify-center text-2xl shadow-md">
+                                <div className="p-4 sm:p-6">
+                                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-0 mb-5">
+                                        <div className="flex items-center gap-3 sm:gap-4">
+                                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl brand-gradient flex items-center justify-center text-xl sm:text-2xl shadow-md flex-shrink-0">
                                                 {order.event.split(' ')[0]}
                                             </div>
-                                            <div>
-                                                <div className="flex items-center gap-3 mb-1">
-                                                    <p className="font-bold" style={{ color: 'var(--dark)', fontSize: 17 }}>{order.names}</p>
-                                                    <span style={{ background: sc.bg, color: sc.color, padding: '3px 10px', borderRadius: 99, fontSize: 12, fontWeight: 600 }}>{order.statusLabel}</span>
+                                            <div className="min-w-0">
+                                                <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1">
+                                                    <p className="font-bold" style={{ color: 'var(--dark)', fontSize: 16 }}>{order.names}</p>
+                                                    <span style={{ background: sc.bg, color: sc.color, padding: '3px 10px', borderRadius: 99, fontSize: 11, fontWeight: 600 }}>{order.statusLabel}</span>
                                                 </div>
-                                                <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>
+                                                <p className="text-xs sm:text-sm" style={{ color: 'var(--text-muted)' }}>
                                                     {order.id} · {order.photos} photos · {order.price} · {order.date}
                                                 </p>
                                             </div>
                                         </div>
-                                        <Link href="/order/preview" style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', color: 'var(--primary)', fontSize: 13, fontWeight: 600, background: 'rgba(255,0,0,0.08)', padding: '8px 16px', borderRadius: 99, border: '1px solid rgba(255,0,0,0.25)' }}>
+                                        <Link href="/order/preview" className="flex-shrink-0 self-start sm:self-auto" style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', color: 'var(--primary)', fontSize: 13, fontWeight: 600, background: 'rgba(255,0,0,0.08)', padding: '8px 16px', borderRadius: 99, border: '1px solid rgba(255,0,0,0.25)' }}>
                                             {order.status === 'awaiting_approval' ? 'Review Album' : 'View Details'}
                                             <ChevronRight size={13} />
                                         </Link>
                                     </div>
 
                                     {/* Step Timeline */}
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-1 overflow-x-auto pb-1">
                                         {stepLabels.map((label, si) => (
-                                            <div key={label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                                            <div key={label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 44 }}>
                                                 <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
                                                     <div style={{
-                                                        width: 24, height: 24, borderRadius: '50%', flexShrink: 0,
+                                                        width: 20, height: 20, borderRadius: '50%', flexShrink: 0,
                                                         background: order.steps[si] ? 'linear-gradient(135deg, var(--primary-dark), var(--primary))' : 'var(--cream)',
                                                         border: `2px solid ${order.steps[si] ? 'var(--primary)' : 'rgba(255,0,0,0.25)'}`,
                                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -95,9 +95,9 @@ export default function OrdersPage() {
                                     </div>
 
                                     {order.status === 'awaiting_approval' && (
-                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 rounded-lg px-4 py-3 flex items-center justify-between" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.2)' }}>
-                                            <p style={{ color: '#2563eb', fontSize: 13, fontWeight: 500 }}>🎉 Your album preview is ready! Please review and approve to proceed to print.</p>
-                                            <Link href="/order/preview" style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', color: '#2563eb', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap', marginLeft: 12 }}>
+                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 rounded-lg px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0" style={{ background: 'rgba(59,130,246,0.06)', border: '1px solid rgba(59,130,246,0.2)' }}>
+                                            <p style={{ color: '#2563eb', fontSize: 13, fontWeight: 500 }}>🎉 Your album preview is ready! Review and approve to print.</p>
+                                            <Link href="/order/preview" style={{ display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', color: '#2563eb', fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>
                                                 Review Now <ArrowRight size={13} />
                                             </Link>
                                         </motion.div>

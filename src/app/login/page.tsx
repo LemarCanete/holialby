@@ -56,7 +56,7 @@ export default function LoginPage() {
             </div>
 
             {/* Right: Form */}
-            <div className="flex-1 lg:max-w-md flex flex-col justify-center px-8 py-12">
+            <div className="flex-1 w-full lg:max-w-md flex flex-col justify-center px-5 sm:px-8 py-8 sm:py-12">
                 <div className="flex items-center gap-2 mb-12">
                     <div className="w-8 h-8 rounded-full brand-gradient flex items-center justify-center">
                         <BookOpen size={15} className="text-white" />

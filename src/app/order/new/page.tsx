@@ -25,40 +25,39 @@ export default function NewOrderPage() {
     return (
         <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
             {/* Header */}
-            <header className="glass" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
-                <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-                    <ArrowLeft size={16} style={{ color: 'var(--text-muted)' }} />
+            <header className="glass px-3 sm:px-6 py-3 sm:py-4" style={{ borderBottom: '1px solid rgba(255,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
+                <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 }}>
+                    <ArrowLeft size={16} style={{ color: 'var(--text-muted)' }} className="hidden sm:block" />
                     <div className="w-7 h-7 rounded-full brand-gradient flex items-center justify-center">
                         <BookOpen size={13} className="text-white" />
                     </div>
-                    <span className="font-bold" style={{ fontFamily: 'Playfair Display, serif', color: 'var(--dark)' }}>Holialby</span>
+                    <span className="font-bold hidden sm:inline" style={{ fontFamily: 'Playfair Display, serif', color: 'var(--dark)' }}>Holialby</span>
                 </Link>
-                {/* Progress bar */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="sm:gap-2">
                     {['Event', 'Upload', 'Customize', 'Preview', 'Order'].map((step, i) => (
-                        <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                             <div style={{
-                                width: 28, height: 28, borderRadius: '50%',
+                                width: 24, height: 24, borderRadius: '50%',
                                 background: i === 0 ? 'linear-gradient(135deg, var(--primary-dark), var(--primary))' : 'white',
                                 border: `2px solid ${i === 0 ? 'var(--primary)' : 'rgba(255,0,0,0.3)'}`,
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                fontSize: 11, fontWeight: 700, color: i === 0 ? 'white' : 'var(--text-muted)'
+                                fontSize: 10, fontWeight: 700, color: i === 0 ? 'white' : 'var(--text-muted)'
                             }}>
                                 {i + 1}
                             </div>
                             <span style={{ fontSize: 12, color: i === 0 ? 'var(--primary)' : 'var(--text-muted)', fontWeight: i === 0 ? 600 : 400 }} className="hidden md:block">{step}</span>
-                            {i < 4 && <div style={{ width: 24, height: 1, background: 'rgba(255,0,0,0.3)' }} />}
+                            {i < 4 && <div style={{ width: 16, height: 1, background: 'rgba(255,0,0,0.3)' }} className="hidden sm:block" />}
                         </div>
                     ))}
                 </div>
-                <div style={{ width: 120 }} />
+                <div className="hidden sm:block" style={{ width: 80 }} />
             </header>
 
-            <div className="max-w-6xl mx-auto px-6 py-16">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
                 <motion.div initial="hidden" animate="show" variants={stagger}>
-                    <motion.div variants={fadeUp} className="text-center mb-12">
+                    <motion.div variants={fadeUp} className="text-center mb-8 sm:mb-12">
                         <div className="section-tag" style={{ display: 'inline-flex', justifyContent: 'center', marginBottom: 16 }}>Step 1 of 5</div>
-                        <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
+                        <h1 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>
                             What&apos;s the occasion?
                         </h1>
                         <p style={{ color: 'var(--text-muted)', fontSize: 16 }}>
@@ -66,13 +65,13 @@ export default function NewOrderPage() {
                         </p>
                     </motion.div>
 
-                    <motion.div variants={stagger} className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                    <motion.div variants={stagger} className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12">
                         {eventTypes.map((et) => (
                             <motion.button
                                 key={et.slug}
                                 variants={fadeUp}
                                 onClick={() => setSelected(et.slug)}
-                                className="text-left rounded-2xl p-6 transition-all duration-200"
+                                className="text-left rounded-2xl p-4 sm:p-6 transition-all duration-200"
                                 style={{
                                     background: selected === et.slug ? et.color : 'white',
                                     border: `2px solid ${selected === et.slug ? et.border : 'rgba(255,0,0,0.15)'}`,

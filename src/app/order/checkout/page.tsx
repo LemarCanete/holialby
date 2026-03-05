@@ -68,38 +68,38 @@ function CheckoutPageContent() {
 
     return (
         <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
-            <header className="glass" style={{ borderBottom: '1px solid rgba(0,0,0,0.06)', padding: '16px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
-                <Link href={`/order/customize?event=${event}`} style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-                    <ArrowLeft size={16} style={{ color: 'var(--text-muted)' }} />
+            <header className="glass px-3 sm:px-6 py-3 sm:py-4" style={{ borderBottom: '1px solid rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 50 }}>
+                <Link href={`/order/customize?event=${event}`} style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 }}>
+                    <ArrowLeft size={16} style={{ color: 'var(--text-muted)' }} className="hidden sm:block" />
                     <div className="w-7 h-7 rounded-full brand-gradient flex items-center justify-center">
                         <BookOpen size={13} className="text-white" />
                     </div>
-                    <span className="font-bold" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--dark)' }}>Holialby</span>
+                    <span className="font-bold hidden sm:inline" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--dark)' }}>Holialby</span>
                 </Link>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                     {['Event', 'Upload', 'Customize', 'Checkout', 'Preview'].map((step, i) => (
-                        <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                             <div style={{
-                                width: 28, height: 28, borderRadius: '50%',
+                                width: 24, height: 24, borderRadius: '50%',
                                 background: i < 3 ? '#22c55e' : i === 3 ? 'var(--dark)' : 'white',
                                 border: `2px solid ${i <= 3 ? 'var(--dark)' : '#E0E0E0'}`,
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                fontSize: 11, fontWeight: 700, color: i <= 3 ? 'white' : 'var(--text-muted)'
+                                fontSize: 10, fontWeight: 700, color: i <= 3 ? 'white' : 'var(--text-muted)'
                             }}>
                                 {i < 3 ? '✓' : i + 1}
                             </div>
                             <span style={{ fontSize: 12, color: i === 3 ? 'var(--dark)' : 'var(--text-muted)', fontWeight: i === 3 ? 600 : 400 }} className="hidden md:block">{step}</span>
-                            {i < 4 && <div style={{ width: 24, height: 1, background: '#E0E0E0' }} />}
+                            {i < 4 && <div style={{ width: 16, height: 1, background: '#E0E0E0' }} className="hidden sm:block" />}
                         </div>
                     ))}
                 </div>
-                <div style={{ width: 120 }} />
+                <div className="hidden sm:block" style={{ width: 80 }} />
             </header>
 
-            <div className="max-w-5xl mx-auto px-6 py-14">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
                 <div className="text-center mb-10">
                     <div className="section-tag" style={{ display: 'inline-flex', marginBottom: 12 }}>Step 4 of 5</div>
-                    <h1 className="text-4xl font-bold mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>Complete Your Order</h1>
+                    <h1 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>Complete Your Order</h1>
                     <p style={{ color: 'var(--text-muted)' }}>Secure checkout powered by Stripe</p>
                 </div>
 
@@ -162,7 +162,7 @@ function CheckoutPageContent() {
                             <div className="rounded-2xl p-6 mb-6" style={{ background: 'white', border: '1px solid #E0E0E0' }}>
                                 <h2 className="text-lg font-bold mb-5" style={{ fontFamily: "'Playfair Display', serif" }}>Shipping Address</h2>
                                 <div className="space-y-4">
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
                                             <label style={{ fontSize: 13, fontWeight: 500, color: 'var(--dark)', display: 'block', marginBottom: 8 }}>First Name</label>
                                             <input type="text" placeholder="Sarah" style={inputStyle}
@@ -182,7 +182,7 @@ function CheckoutPageContent() {
                                             onFocus={e => e.target.style.borderColor = 'var(--dark)'}
                                             onBlur={e => e.target.style.borderColor = '#E0E0E0'} />
                                     </div>
-                                    <div className="grid grid-cols-3 gap-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         <div>
                                             <label style={{ fontSize: 13, fontWeight: 500, color: 'var(--dark)', display: 'block', marginBottom: 8 }}>City</label>
                                             <input type="text" placeholder="New York" style={inputStyle}
